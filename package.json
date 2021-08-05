@@ -1,5 +1,5 @@
 {
-  "name": "Resizable Screens",
+  "name": "resizable-screens",
   "description": "Grid of adjustable screens.",
   "version": "1.0.0",
   "main": "index.js",
