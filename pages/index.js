@@ -35,13 +35,9 @@ const HomePage = () => {
   useEffect(() => {
     //  Loads an initial images.
     const loadImages = async () => {
-      let arr = images;
-
-      while (arr.length < initialImages) {
+      for (let i = 0; i < initialImages; i++) {
         const image = await getImage();
-        arr.push(image);
-        arr = Array.from(new Set(arr));
-        setImages(arr);
+        setImages(images => [...images, image]);
       }
     }
 
@@ -57,7 +53,7 @@ const HomePage = () => {
 
         {(images.length > 0)
           ? images.map((image, index) => <Screen key={index} num={index} src={image} />)
-          : <p>Add images here</p>}
+          : <p>No images!</p>}
       </Grid>
     </Grid>
   </Container>
