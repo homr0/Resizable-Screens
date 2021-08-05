@@ -1,2 +1,3 @@
-# Network-Optix-Project
-Network Optix Take Home Project
+# Resizable Screens
+
+A demo application to show multiple movable and resizable squares.
