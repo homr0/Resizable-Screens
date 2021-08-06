@@ -25,7 +25,7 @@ const Screen = ({ num, src, screen = true }) => {
     {src
       ? <Image src={src} width={width} height={height} alt={`Image ${num}`}
         placeholder="blur" className="screen"
-        blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOUUpCqBwABhQDVMfwd+AAAAABJRU5ErkJggg==" />
+        blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" />
       : <p>Image did not load</p>}
   </div>);
 };

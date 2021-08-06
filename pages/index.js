@@ -4,9 +4,31 @@ import {
   Container, Grid,
   ImageList, ImageListItem, ImageListItemBar
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles"
 
 import Screen from "../components/Screen";
-import { description } from "platform";
+
+const useStyles = makeStyles({
+  canvas: {
+    height: "100vh",
+    overflow: "hidden"
+  },
+
+  gallery: {
+    height: "100vh",
+    overflowY: "scroll",
+    backgroundColor: "rgba(0, 0, 0, 0.75)",
+    textAlign: "center",
+    padding: "0 !important"
+  },
+
+  galleryHeader: {
+    backgroundColor: "rgba(0, 0, 0, 0.25)",
+    color: "white",
+    textAlign: "center",
+    width: "100%"
+  }
+});
 
 const HomePage = () => {
   const initialImages = 32;
@@ -14,6 +36,8 @@ const HomePage = () => {
   const minH = 30;
   const maxW = 1200;
   const maxH = 800;
+
+  const classes = useStyles();
 
   const [images, setImages] = useState([]);
   const [screenList, setScreenList] = useState([]);
@@ -59,27 +83,31 @@ const HomePage = () => {
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
 
-    <Container>
-      <Grid container spacing={3} id="canvas">
-        <Grid item xs={12} sm={3} component={"section"} id="gallery">
-          <ImageList cols={1} variant="masonry" gap={8}>
-            {(images.length > 0)
-              ? images.map((image, index) => <ImageListItem key={image}>
-                <Screen key={index} num={index} src={image} />
-
-                <ImageListItemBar title={`Screen ${index + 1}`} />
-                </ImageListItem>)
-              : <p>Images will be loaded here.</p>}
-          </ImageList>
+    <Grid container spacing={3} className={classes.canvas}>
+      <Grid item xs={12} sm={3} id="gallery" className={classes.gallery}>
+        <Grid container>
+          <Grid item className={classes.galleryHeader}>
+            <h1>Screen Gallery</h1>
+          </Grid>
         </Grid>
 
-        <Grid item xs={12} sm={9} component={"section"}>
-          {(screenList.length > 0)
-            ? screenList.map((image, index) => <Screen key={index} num={index} src={image} />)
-            : <p>Screens will be displayed here.</p>}
-        </Grid>
+        <ImageList cols={1} variant="masonry" gap={8} >
+          {(images.length > 0)
+            ? images.map((image, index) => <ImageListItem key={image}>
+              <Screen key={index} num={index} src={image} />
+
+              <ImageListItemBar title={`Screen ${index + 1}`} />
+              </ImageListItem>)
+            : <p>Images will be loaded here.</p>}
+        </ImageList>
       </Grid>
-    </Container>
+
+      <Grid item xs={12} sm={9} className={classes.canvas}>
+        {(screenList.length > 0)
+          ? screenList.map((image, index) => <Screen key={index} num={index} src={image} />)
+          : <p>Screens will be displayed here.</p>}
+      </Grid>
+    </Grid>
   </>
 }
 
