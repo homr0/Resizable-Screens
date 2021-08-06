@@ -1,0 +1,16 @@
+#canvas {
+  height: 100vh;
+  overflow: hidden;
+}
+
+section#gallery {
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+@media only screen and (max-width: 600px) {
+  section#gallery {
+    background-color: lightblue;
+    height: 50vh;
+  }
+}

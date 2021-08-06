@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Container, Grid } from "@material-ui/core";
+import Head from "next/head";
+import {
+  Container, Grid,
+  ImageList, ImageListItem, ImageListItemBar
+} from "@material-ui/core";
 
 import Screen from "../components/Screen";
+import { description } from "platform";
 
 const HomePage = () => {
   const initialImages = 32;
@@ -44,19 +49,38 @@ const HomePage = () => {
     loadImages();
   }, []);
 
-  return <Container>
-    <Grid container>
-      <Grid item xs={12}>
-        <p>Item goes here</p>
+  return <>
+    <Head>
+      <meta charSet="utf-8" />
 
-        <p>Screen will go here</p>
+      <title>Resizable Screens</title>
+      <meta name="description" content="Demo of images/screens that can be moved, resized, and removed." />
 
-        {(images.length > 0)
-          ? images.map((image, index) => <Screen key={index} num={index} src={image} />)
-          : <p>No images!</p>}
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    </Head>
+
+    <Container>
+      <Grid container spacing={3} id="canvas">
+        <Grid item xs={12} sm={3} component={"section"} id="gallery">
+          <ImageList cols={1} variant="masonry" gap={8}>
+            {(images.length > 0)
+              ? images.map((image, index) => <ImageListItem key={image}>
+                <Screen key={index} num={index} src={image} />
+
+                <ImageListItemBar title={`Screen ${index + 1}`} />
+                </ImageListItem>)
+              : <p>Images will be loaded here.</p>}
+          </ImageList>
+        </Grid>
+
+        <Grid item xs={12} sm={9} component={"section"}>
+          {(screenList.length > 0)
+            ? screenList.map((image, index) => <Screen key={index} num={index} src={image} />)
+            : <p>Screens will be displayed here.</p>}
+        </Grid>
       </Grid>
-    </Grid>
-  </Container>
+    </Container>
+  </>
 }
 
 export default HomePage;
