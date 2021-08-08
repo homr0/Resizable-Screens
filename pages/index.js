@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
-import {
-  Container, Grid,
+import { Grid,
   ImageList, ImageListItem, ImageListItemBar
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles"
+import { makeStyles } from "@material-ui/styles";
 
 import Screen from "../components/Screen";
 
@@ -16,6 +15,7 @@ const useStyles = makeStyles({
 
   gallery: {
     height: "100vh",
+    overflowX: "hidden",
     overflowY: "scroll",
     backgroundColor: "rgba(0, 0, 0, 0.75)",
     textAlign: "center",
