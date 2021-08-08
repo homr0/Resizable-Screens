@@ -1,33 +1,52 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import reactable from "reactablejs";
 
 /**
  * Creates a resizable image screen.
- * @param {Number} num - Index of the image in the array
- * @param {String} src - Image URL
- * @param {Boolean} screen - Checks if the image is a screen or a regular image
- * @returns
+ * @param {Object} props
+ * @returns an image screen
  */
-const Screen = ({ num, src, screen = true }) => {
-  const [width, setWidth] = useState(300);
-  const [height, setHeight] = useState(300);
+const ScreenImage = (props) => {
+  const { src, w, h, x, y, num, getRef } = props;
 
-  // Gets the image's actual width and height if it's not in the gallery.
-  useEffect(() => {
-    if (screen) {
-      const url = new URL(src);
-      setWidth(url.searchParams.get("w"));
-      setHeight(url.searchParams.get("h"));
-    }
-  }, []);
+  return (<div className="screen" ref={getRef}>
+    <Image src={src} width={w} height={h} alt={`Image ${num}`}placeholder="blur"
+      blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" />
 
-  return (<div>
-    {src
-      ? <Image src={src} width={width} height={height} alt={`Image ${num}`}
-        placeholder="blur" className="screen"
-        blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" />
-      : <p>Image did not load</p>}
+    <p>
+      X: {x}<br />
+      Y: {y}<br />
+      Width: {w}<br />
+      Height: {h}
+    </p>
   </div>);
+};
+
+const Reactable = reactable(ScreenImage);
+
+const Screen = (props) => {
+  const { num, url, w, h } = props;
+
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
+  const [width, setWidth] = useState(w);
+  const [height, setHeight] = useState(h);
+
+  return (<Reactable
+    num={num} x={x} y={y} src={url} w={width} h={height}
+    draggable
+    onDragMove={event => {
+      const { dx, dy, target } = event;
+        setX((parseFloat(target.getAttribute("data-x")) || 0) + dx);
+        setY((parseFloat(target.getAttribute("data-y")) || 0) + dy);
+
+        event.target.style.transform = `translate(${x}px, ${y}px)`;
+        target.setAttribute("data-x", x);
+        target.setAttribute("data-y", y);
+    }}
+
+  />)
 };
 
 export default Screen;

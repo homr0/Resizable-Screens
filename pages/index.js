@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
+import Image from "next/image";
 import { Grid,
   ImageList, ImageListItem, ImageListItemBar
 } from "@material-ui/core";
@@ -56,13 +57,17 @@ const HomePage = () => {
    */
   const getImage = async () => {
     //  Fetches the image url with random width and height.
-    const image = await fetch(`https://source.unsplash.com/random/${random(minW, maxW)}x${random(minH, maxH)}`);
+    const w = random(minW, maxW);
+    const h = random(minH, maxH);
+    const image = await fetch(`https://source.unsplash.com/random/${w}x${h}`);
 
-    return image.url;
+    return {
+      url: image.url, w, h
+    };
   };
 
+  // Initial loading of images and interactables.
   useEffect(() => {
-    //  Loads an initial images.
     const loadImages = async () => {
       for (let i = 0; i < initialImages; i++) {
         const image = await getImage();
@@ -93,8 +98,11 @@ const HomePage = () => {
 
         <ImageList cols={1} variant="masonry" gap={8} >
           {(images.length > 0)
-            ? images.map((image, index) => <ImageListItem key={image}>
-              <Screen key={index} num={index} src={image} />
+            ? images.map((image, index) => <ImageListItem key={image.url}>
+              <Image src={image.url} width={image.w} height={image.h}
+                alt={`Image ${index}`} placeholder="blur"
+                blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                onClick={() => setScreenList(screenList => [...screenList, image])} />
 
               <ImageListItemBar title={`Screen ${index + 1}`} />
               </ImageListItem>)
@@ -104,7 +112,7 @@ const HomePage = () => {
 
       <Grid item xs={12} sm={9} className={classes.canvas}>
         {(screenList.length > 0)
-          ? screenList.map((image, index) => <Screen key={index} num={index} src={image} />)
+          ? screenList.map((image, index) => <Screen key={index} num={index} {...image} />)
           : <p>Screens will be displayed here.</p>}
       </Grid>
     </Grid>
