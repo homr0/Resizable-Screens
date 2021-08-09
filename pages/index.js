@@ -11,7 +11,8 @@ import Screen from "../components/Screen";
 const useStyles = makeStyles({
   canvas: {
     height: "100vh",
-    overflow: "hidden"
+    overflowX: "hidden",
+    overflowY: "scroll"
   },
 
   gallery: {
@@ -31,8 +32,7 @@ const useStyles = makeStyles({
   },
 
   screens: {
-    position: "relative",
-    overflowY: "scroll"
+    position: "relative"
   }
 });
 
