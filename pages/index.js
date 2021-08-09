@@ -13,8 +13,7 @@ const useStyles = makeStyles({
   canvas: {
     height: "100vh",
     overflowX: "hidden",
-    overflowY: "scroll",
-    color: "white"
+    overflowY: "scroll"
   },
 
   gallery: {
@@ -37,8 +36,7 @@ const useStyles = makeStyles({
   },
 
   screens: {
-    position: "relative",
-    backgroundColor: "rgba(0, 0, 0, 0.5)"
+    position: "relative"
   },
 
   icon: {
@@ -120,6 +118,7 @@ const HomePage = () => {
         </Grid>
 
         {imageList
+          // Loads images as an image list or as a text list.
           ? <ImageList cols={1} variant="masonry" gap={8} >
               {images.map((image, index) => <ImageListItem key={image.url}>
                 <Image src={image.url} width={image.w} height={image.h}
