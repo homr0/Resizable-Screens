@@ -78,7 +78,7 @@ const HomePage = () => {
         const image = await getImage();
         setImages(images => [...images, image]);
       }
-    }
+    };
 
     loadImages();
   }, []);
@@ -116,7 +116,9 @@ const HomePage = () => {
       </Grid>
 
       <Grid item xs={12} sm={9} className={classes.screens}>
-        {screenList.map((image, index) => <Screen key={index} num={index} {...image} />)}
+        {screenList.map((image, index) => <Screen key={index}
+          num={index} {...image}
+          remove={() =>  setScreenList([...screenList.slice(0, index), ...screenList.slice(index + 1)])} />)}
       </Grid>
     </Grid>
   </>

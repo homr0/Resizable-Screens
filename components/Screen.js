@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import Close from "@material-ui/icons/Close";
 import { makeStyles } from "@material-ui/styles";
 import interact from "interactjs";
 import reactable from "reactablejs";
@@ -7,7 +8,20 @@ import reactable from "reactablejs";
 const useStyles = makeStyles({
   screen: {
     display: "inline-block",
-    boxShadow: "0 4px 8px 4px rgba(0, 0, 0, 0.8)"
+    boxShadow: "0 4px 8px 4px rgba(0, 0, 0, 0.8)",
+    minWidth: "30px",
+    minHeight: "30px"
+  },
+
+  close: {
+    position: "absolute",
+    transform: "translate(-50px, 10px)",
+    width: "40px",
+    height: "40px",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    color: "rgba(255, 255, 255, 0.9)",
+    cursor: "default",
+    borderRadius: "50%"
   }
 });
 
@@ -17,13 +31,15 @@ const useStyles = makeStyles({
  * @returns A node with an image
  */
 const ScreenImage = (props) => {
-  const { src, w, h, num, getRef } = props;
+  const { src, w, h, num, getRef, remove } = props;
 
   const classes = useStyles();
 
   return (<div className={classes.screen} ref={getRef}>
     <Image src={src} width={w} height={h} alt={`Image ${num}`}placeholder="blur"
       blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" />
+
+    <Close onClick={remove} className={classes.close} />
   </div>);
 };
 
@@ -35,12 +51,12 @@ const Reactable = reactable(ScreenImage);
  * @returns A node with an image that can be moved around a canvas
  */
 const Screen = (props) => {
-  const { num, url, w, h } = props;
+  const { num, url, w, h, remove } = props;
 
   const [size, setSize] = useState({ w: w, h: h });
 
   return (<Reactable
-    num={num} src={url}
+    num={num} src={url} remove={remove}
 
     draggable={{
       onmove: event => {
@@ -88,6 +104,10 @@ const Screen = (props) => {
           outer: "parent",
           endOnly: true,
         }),
+
+        interact.modifiers.restrictSize({
+          min: { width: 60, height: 60 }
+        })
       ]
     }}
 
