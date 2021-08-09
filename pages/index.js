@@ -13,7 +13,9 @@ const useStyles = makeStyles({
   canvas: {
     height: "100vh",
     overflowX: "hidden",
-    overflowY: "scroll"
+    overflowY: "scroll",
+    color: "white",
+    backgroundColor: "rgba(0, 0, 0, 0.5)"
   },
 
   gallery: {

@@ -1,9 +1,3 @@
-body {
-  overflow: hidden;
-  color: "white";
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
 @media only screen and (max-width: 600px) {
   #gallery {
     height: 50vh;
