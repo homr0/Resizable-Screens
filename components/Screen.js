@@ -11,20 +11,13 @@ const useStyles = makeStyles({
 });
 
 const ScreenImage = (props) => {
-  const { src, w, h, x, y, num, getRef } = props;
+  const { src, w, h, num, getRef } = props;
 
   const classes = useStyles();
 
   return (<div className={classes.screen} ref={getRef}>
     <Image src={src} width={w} height={h} alt={`Image ${num}`}placeholder="blur"
       blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" />
-
-    <p>
-      X: {x}<br />
-      Y: {y}<br />
-      Width: {w}<br />
-      Height: {h}
-    </p>
   </div>);
 };
 
@@ -33,12 +26,7 @@ const Reactable = reactable(ScreenImage);
 const Screen = (props) => {
   const { num, url, w, h } = props;
 
-  const [pos, setPos] = useState({
-    x: 0,
-    y: 0,
-    w: w,
-    h: h
-  })
+  const [size, setSize] = useState({ w: w, h: h });
 
   return (<Reactable
     num={num} src={url}
@@ -52,19 +40,44 @@ const Screen = (props) => {
         target.style.transform = `translate(${posX}px, ${posY}px)`;
         target.setAttribute("data-x", posX);
         target.setAttribute("data-y", posY);
-
-        setPos(coordinates => ({ ...coordinates, x: posX, y: posY }));
       },
 
       modifiers: [
         interact.modifiers.restrictRect({
           restriction: "parent",
-          endOnly: true,
+          endOnly: true
         }),
       ],
     }}
 
-    {...pos}
+    resizable={{
+      edges: { left: true, right: true, top: true, bottom: true },
+
+      onmove: event => {
+        const { target, rect, deltaRect } = event;
+        const { width, height } = rect;
+        const { left, top } = deltaRect;
+        const { x, y } = target.dataset;
+
+        const posX = (parseFloat(x) || 0) + left;
+        const posY = (parseFloat(y) || 0) + top;
+
+        target.style.transform = `translate(${posX}px, ${posY}px)`;
+        target.style.width = `${width}px`;
+        target.style.height = `${height}px`;
+
+        setSize({ w: width, h: height });
+      },
+
+      modifiers: [
+        interact.modifiers.restrictEdges({
+          outer: "parent",
+          endOnly: true,
+        }),
+      ]
+    }}
+
+    {...size}
   />)
 };
 
