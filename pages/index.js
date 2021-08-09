@@ -28,6 +28,10 @@ const useStyles = makeStyles({
     color: "white",
     textAlign: "center",
     width: "100%"
+  },
+
+  screens: {
+    position: "absolute"
   }
 });
 
@@ -110,7 +114,7 @@ const HomePage = () => {
         </ImageList>
       </Grid>
 
-      <Grid item xs={12} sm={9} className={classes.canvas}>
+      <Grid item xs={12} sm={9} className={classes.screens}>
         {(screenList.length > 0)
           ? screenList.map((image, index) => <Screen key={index} num={index} {...image} />)
           : <p>Screens will be displayed here.</p>}
