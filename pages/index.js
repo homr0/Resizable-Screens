@@ -31,7 +31,8 @@ const useStyles = makeStyles({
   },
 
   screens: {
-    position: "absolute"
+    position: "relative",
+    overflowY: "scroll"
   }
 });
 
@@ -115,9 +116,7 @@ const HomePage = () => {
       </Grid>
 
       <Grid item xs={12} sm={9} className={classes.screens}>
-        {(screenList.length > 0)
-          ? screenList.map((image, index) => <Screen key={index} num={index} {...image} />)
-          : <p>Screens will be displayed here.</p>}
+        {screenList.map((image, index) => <Screen key={index} num={index} {...image} />)}
       </Grid>
     </Grid>
   </>
