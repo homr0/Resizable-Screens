@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
-import { Grid, ImageList, ImageListItem, ImageListItemBar,
+import { Grid, ImageList, ImageListItem, ImageListItemBar, CircularProgress,
   List, ListItem, ListItemText, ListItemSecondaryAction, IconButton
 } from "@material-ui/core";
 import  {Add, Toc, ViewAgenda } from "@material-ui/icons";
@@ -39,6 +39,10 @@ const useStyles = makeStyles({
   screens: {
     position: "relative",
     backgroundColor: "rgba(0, 0, 0, 0.5)"
+  },
+
+  icon: {
+    color: "white"
   }
 });
 
@@ -87,7 +91,9 @@ const HomePage = () => {
       }
     };
 
-    loadImages();
+    if (images.length < initialImages) {
+      loadImages();
+    }
   }, []);
 
   return <>
@@ -106,38 +112,40 @@ const HomePage = () => {
           <Grid item className={classes.galleryHeader}>
             <h1>Screen Gallery</h1>
 
-            <IconButton edge="end" aria-label="switch-view" onClick={() => setImageList(!imageList)}>
+            <IconButton className={classes.icon} edge="end"
+              aria-label="switch-view" onClick={() => setImageList(!imageList)}>
               {imageList ? <Toc /> : <ViewAgenda />}
             </IconButton>
           </Grid>
         </Grid>
 
-        {(images.length > 0)
-          ? imageList
-            ? <ImageList cols={1} variant="masonry" gap={8} >
-                {images.map((image, index) => <ImageListItem key={image.url}>
-                  <Image src={image.url} width={image.w} height={image.h}
-                    alt={`Image ${index}`} placeholder="blur"
-                    blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                    onClick={() => setScreenList(screenList => [...screenList, image])} />
+        {imageList
+          ? <ImageList cols={1} variant="masonry" gap={8} >
+              {images.map((image, index) => <ImageListItem key={image.url}>
+                <Image src={image.url} width={image.w} height={image.h}
+                  alt={`Image ${index}`} placeholder="blur"
+                  blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                  onClick={() => setScreenList(screenList => [...screenList, image])} />
 
-                  <ImageListItemBar title={`Screen ${index + 1}`} />
-                </ImageListItem>)}
-              </ImageList>
-            : <List>
-              {images.map((image, index) => <ListItem key={image.url}
-                className={classes.galleryList}>
-                <ListItemText>Screen {index + 1}</ListItemText>
+                <ImageListItemBar title={`Screen ${index + 1}`} />
+              </ImageListItem>)}
+            </ImageList>
+          : <List>
+            {images.map((image, index) => <ListItem key={image.url}
+              className={classes.galleryList}>
+              <ListItemText>Screen {index + 1}</ListItemText>
 
-                <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="add" onClick={() => setScreenList(screenList => [...screenList, image])}>
-                    <Add />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>)}
-            </List>
-          : <p>Loading...</p>
+              <ListItemSecondaryAction>
+                <IconButton className={classes.icon} edge="end" aria-label="add"
+                  onClick={() => setScreenList(screenList => [...screenList, image])}>
+                  <Add />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>)}
+          </List>
         }
+
+        {(images.length < initialImages) && <CircularProgress />}
       </Grid>
 
       <Grid item xs={12} sm={9} className={classes.screens}>
