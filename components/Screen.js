@@ -66,6 +66,9 @@ const Screen = (props) => {
         target.style.width = `${width}px`;
         target.style.height = `${height}px`;
 
+        target.dataset.x = posX;
+        target.dataset.y = posY;
+
         setSize({ w: width, h: height });
       },
 
