@@ -38,12 +38,15 @@ const Screen = (props) => {
     draggable
     onDragMove={event => {
       const { dx, dy, target } = event;
-        setX((parseFloat(target.getAttribute("data-x")) || 0) + dx);
-        setY((parseFloat(target.getAttribute("data-y")) || 0) + dy);
+      const posX = (parseFloat(target.getAttribute("data-x")) || 0) + dx;
+      const posY = (parseFloat(target.getAttribute("data-y")) || 0) + dy;
 
-        event.target.style.transform = `translate(${x}px, ${y}px)`;
-        target.setAttribute("data-x", x);
-        target.setAttribute("data-y", y);
+      setX(posX);
+      setY(posY);
+
+      target.style.transform = `translate(${posX}px, ${posY}px)`;
+      target.setAttribute("data-x", posX);
+      target.setAttribute("data-y", posY);
     }}
 
   />)
