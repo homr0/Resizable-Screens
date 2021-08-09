@@ -6,10 +6,16 @@ import reactable from "reactablejs";
 
 const useStyles = makeStyles({
   screen: {
-    display: "inline-block"
+    display: "inline-block",
+    boxShadow: "0 4px 8px 4px rgba(0, 0, 0, 0.8)"
   }
 });
 
+/**
+ * A component containing the image.
+ * @param {Object} props - Image properties
+ * @returns A node with an image
+ */
 const ScreenImage = (props) => {
   const { src, w, h, num, getRef } = props;
 
@@ -23,6 +29,11 @@ const ScreenImage = (props) => {
 
 const Reactable = reactable(ScreenImage);
 
+/**
+ * The movable, resizable, and removable image component.
+ * @param {Object} props Image properties
+ * @returns A node with an image that can be moved around a canvas
+ */
 const Screen = (props) => {
   const { num, url, w, h } = props;
 
