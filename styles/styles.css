@@ -21,4 +21,8 @@ body {
   #gallery {
     height: 50vh;
   }
+
+  #gallery-images {
+    height: 25vh;
+  }
 }

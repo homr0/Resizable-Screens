@@ -132,7 +132,7 @@ const HomePage = () => {
           <Grid item className={classes.galleryList} id="gallery-images">
             {imageList
               // Loads images as an image list or as a text list.
-              ? <ImageList cols={1} variant="masonry" gap={8} >
+              ? <ImageList cols={2} variant="masonry" gap={8} >
                   {images.map((image, index) => <ImageListItem key={image.url}>
                     <Image src={image.url} width={image.w} height={image.h}
                       alt={`Image ${index}`} placeholder="blur"
