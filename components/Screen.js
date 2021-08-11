@@ -4,13 +4,15 @@ import Close from "@material-ui/icons/Close";
 import { makeStyles } from "@material-ui/styles";
 import interact from "interactjs";
 import reactable from "reactablejs";
+import { format } from "date-fns";
 
 const useStyles = makeStyles({
   screen: {
     display: "inline-block",
     boxShadow: "0 4px 8px 4px rgba(0, 0, 0, 0.8)",
     minWidth: "30px",
-    minHeight: "30px"
+    minHeight: "30px",
+    position: "relative"
   },
 
   close: {
@@ -22,6 +24,16 @@ const useStyles = makeStyles({
     color: "rgba(255, 255, 255, 0.9)",
     cursor: "default",
     borderRadius: "50%"
+  },
+
+  timestamp: {
+    textAlign: "right",
+    padding: "0.5rem 0.5rem",
+    margin: "-0.25rem 0",
+    position: "absolute",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    right: "0",
+    bottom: "0"
   }
 });
 
@@ -40,6 +52,8 @@ const ScreenImage = (props) => {
       blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" />
 
     <Close onClick={remove} className={classes.close} />
+
+    <p className={classes.timestamp}>{format(new Date(), "yyyy-MM-dd HH:mm:ss:SS xxx")}</p>
   </div>);
 };
 

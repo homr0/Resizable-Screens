@@ -4,17 +4,17 @@ body {
   background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
-body::-webkit-scrollbar {
+#gallery::-webkit-scrollbar {
   width: 1em;
 }
 
-body::-webkit-scrollbar-track {
+#gallery::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: rgba(0, 0, 0, 0.5)
 }
 
-body::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.25);
+#gallery::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.25);
 }
 
 @media only screen and (max-width: 600px) {
