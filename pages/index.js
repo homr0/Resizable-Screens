@@ -8,7 +8,6 @@ import  {Add, Toc, ViewAgenda } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
 
 import Screen from "../components/Screen";
-import image from "next/image";
 
 const useStyles = makeStyles({
   canvas: {
@@ -19,8 +18,6 @@ const useStyles = makeStyles({
 
   gallery: {
     height: "100vh",
-    overflowX: "hidden",
-    overflowY: "scroll",
     backgroundColor: "rgba(0, 0, 0, 0.75)",
     textAlign: "center",
     padding: "0 !important"
@@ -34,6 +31,10 @@ const useStyles = makeStyles({
 
   galleryList: {
     fontSize: "1.5rem",
+    height: "80vh",
+    overflowX: "hidden",
+    overflowY: "scroll",
+    width: "100%"
   },
 
   screens: {
@@ -127,37 +128,40 @@ const HomePage = () => {
           </Grid>
         </Grid>
 
-        {imageList
-          // Loads images as an image list or as a text list.
-          ? <ImageList cols={1} variant="masonry" gap={8} >
-              {images.map((image, index) => <ImageListItem key={image.url}>
-                <Image src={image.url} width={image.w} height={image.h}
-                  alt={`Image ${index}`} placeholder="blur"
-                  blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                  onClick={() => setScreenList(screenList => [...screenList, image])} />
+        <Grid container>
+          <Grid item className={classes.galleryList} id="gallery-images">
+            {imageList
+              // Loads images as an image list or as a text list.
+              ? <ImageList cols={1} variant="masonry" gap={8} >
+                  {images.map((image, index) => <ImageListItem key={image.url}>
+                    <Image src={image.url} width={image.w} height={image.h}
+                      alt={`Image ${index}`} placeholder="blur"
+                      blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                      onClick={() => setScreenList(screenList => [image, ...screenList])} />
 
-                <ImageListItemBar title={`Screen ${index + 1}`} />
-              </ImageListItem>)}
-            </ImageList>
-          : <List>
-            {images.map((image, index) => <ListItem key={image.url}
-              className={classes.galleryList}>
-              <ListItemText>Screen {index + 1}</ListItemText>
+                    <ImageListItemBar title={`Screen ${index + 1}`} />
+                  </ImageListItem>)}
+                </ImageList>
+              : <List>
+                {images.map((image, index) => <ListItem key={image.url}>
+                  <ListItemText>Screen {index + 1}</ListItemText>
 
-              <ListItemSecondaryAction>
-                <IconButton className={classes.icon} edge="end" aria-label="add"
-                  onClick={() => setScreenList(screenList => [...screenList, image])}>
-                  <Add />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>)}
-          </List>
-        }
+                  <ListItemSecondaryAction>
+                    <IconButton className={classes.icon} edge="end" aria-label="add"
+                      onClick={() => setScreenList(screenList => [image, ...screenList])}>
+                      <Add />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>)}
+              </List>
+            }
 
-        {(images.length < initialImages) ? <CircularProgress /> : <IconButton className={classes.icon} onClick={() => {
-          getImage()
-            .then(image => setImages(images => [...images, image]));
-        }}><Add /></IconButton>}
+            {(images.length < initialImages) ? <CircularProgress /> : <IconButton className={classes.icon} onClick={() => {
+              getImage()
+                .then(image => setImages(images => [...images, image]));
+            }}><Add /></IconButton>}
+          </Grid>
+        </Grid>
       </Grid>
 
       <Grid item xs={12} sm={9} className={classes.screens}>
