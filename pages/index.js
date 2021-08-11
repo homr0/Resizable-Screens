@@ -139,12 +139,12 @@ const HomePage = () => {
                       blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                       onClick={() => setScreenList(screenList => [image, ...screenList])} />
 
-                    <ImageListItemBar title={`Screen ${index + 1}`} />
+                    <ImageListItemBar title={`Camera ${index + 1}`} />
                   </ImageListItem>)}
                 </ImageList>
               : <List>
                 {images.map((image, index) => <ListItem key={image.url}>
-                  <ListItemText>Screen {index + 1}</ListItemText>
+                  <ListItemText>Camera {index + 1}</ListItemText>
 
                   <ListItemSecondaryAction>
                     <IconButton className={classes.icon} edge="end" aria-label="add"
