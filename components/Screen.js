@@ -47,13 +47,17 @@ const ScreenImage = (props) => {
 
   const classes = useStyles();
 
+  const [time, setTime] = useState(new Date());
+
+  setInterval(() => setTime(new Date()), 1000);
+
   return (<div className={classes.screen} ref={getRef}>
     <Image src={src} width={w} height={h} alt={`Image ${num}`}placeholder="blur"
       blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" />
 
     <Close onClick={remove} className={classes.close} />
 
-    <p className={classes.timestamp}>{format(new Date(), "yyyy-MM-dd HH:mm:ss:SS xxx")}</p>
+    <p className={classes.timestamp}>{format(time, "yyyy-MM-dd HH:mm:ss xxx")}</p>
   </div>);
 };
 
