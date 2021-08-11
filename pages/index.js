@@ -119,7 +119,7 @@ const HomePage = () => {
       <Grid item xs={12} sm={3} id="gallery" className={classes.gallery}>
         <Grid container>
           <Grid item className={classes.galleryHeader}>
-            <h1>Screen Gallery</h1>
+            <h1>Camera Gallery</h1>
 
             <IconButton className={classes.icon} edge="end"
               aria-label="switch-view" onClick={() => setImageList(!imageList)}>
