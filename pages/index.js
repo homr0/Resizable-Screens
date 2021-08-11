@@ -8,14 +8,13 @@ import  {Add, Toc, ViewAgenda } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
 
 import Screen from "../components/Screen";
+import image from "next/image";
 
 const useStyles = makeStyles({
   canvas: {
     height: "100vh",
     overflowX: "hidden",
-    overflowY: "scroll",
-    color: "white",
-    backgroundColor: "rgba(0, 0, 0, 0.5)"
+    overflowY: "scroll"
   },
 
   gallery: {
@@ -84,15 +83,24 @@ const HomePage = () => {
 
   // Initial loading of images and interactables.
   useEffect(() => {
-    const loadImages = async () => {
-      for (let i = 0; i < initialImages; i++) {
-        const image = await getImage();
-        setImages(images => [...images, image]);
-      }
-    };
+    // Loads images from the public images folder
+    for (let i = 0; i < initialImages; i++) {
+      // Gets the image url
+      const image = document.createElement("img");
+      image.src = `../images/screen${i + 1}.webp`;
 
-    if (images.length < initialImages) {
-      loadImages();
+      // Gets the image's width and height
+      image.onload = function () {
+        if ((this.naturalWidth !== 0) && (this.naturalHeight !== 0)) {
+          const img = {
+            url: this.src,
+            w: this.naturalWidth,
+            h: this.naturalHeight
+          };
+
+          setImages(images => [...images, img]);
+        }
+      }
     }
   }, []);
 
@@ -146,7 +154,10 @@ const HomePage = () => {
           </List>
         }
 
-        {(images.length < initialImages) && <CircularProgress />}
+        {(images.length < initialImages) ? <CircularProgress /> : <IconButton className={classes.icon} onClick={() => {
+          getImage()
+            .then(image => setImages(images => [...images, image]));
+        }}><Add /></IconButton>}
       </Grid>
 
       <Grid item xs={12} sm={9} className={classes.screens}>

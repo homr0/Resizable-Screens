@@ -10,11 +10,15 @@ const light = createTheme({
     mode: "light",
     primary: {
       main: purple[500],
+      contrastText: "#ffffff"
     },
     secondary: {
       main: green[500],
+      contrastText: "#ffffff"
     },
-  },
+
+    contrastThreshold: 3,
+  }
 });
 
 const dark = createTheme({
