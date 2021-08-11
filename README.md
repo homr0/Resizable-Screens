@@ -10,7 +10,7 @@ A set of 32 images has already been included with the React app. More images can
 
 ### Images on the Screen
 
-1. **Add**: Click on the screen image or the button to the right of the screen name that you want to add to the screen.
+1. **Add**: Click on the camera image or the button to the right of the camera name that you want to add to the screen.
 2. **Move**: Click on the image on the screen that you want to move and drag it along the screen.
 3. **Resize**: Click on the edge of the image and drag it to the desired size.
 4. **Delete**: To remove an image from the screen, click on the "x" in the upper right corner of the screen.
